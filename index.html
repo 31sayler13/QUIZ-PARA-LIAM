@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Quiz Para Mi Solecito</title>
+<style>
+    body {
+        margin: 0;
+        font-family: "Georgia", serif;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-image: url('https://i.imgur.com/eLDEcjN.jpeg');
+        color: #4b3f3f;
+    }
+
+    .marco {
+        max-width: 700px;
+        margin: 80px auto;
+        padding: 40px;
+        background: rgba(255, 255, 255, 0.85);
+        border-radius: 20px;
+        box-shadow: 0 0 25px rgba(0,0,0,0.35);
+        position: relative;
+    }
+
+    .marco::before,
+    .marco::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 320px;
+        height: 150px;
+        background-image: url('bea4b814-145c-43b3-9bca-6eea64793ee5.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        opacity: 0.85;
+    }
+
+    .marco::before { top: -70px; }
+    .marco::after { bottom: -70px; }
+
+    h1 {
+        text-align: center;
+        font-size: 30px;
+        margin-bottom: 20px;
+    }
+
+    .pregunta {
+        margin-bottom: 25px;
+        font-size: 20px;
+    }
+
+    label {
+        display: flex;
+        align-items: center;
+        margin: 6px 0;
+        cursor: pointer;
+    }
+
+    input[type="radio"] {
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+        background-color: #fff;
+        border-radius: 50%;
+        border: 2px solid #c4a7a0;
+        position: relative;
+    }
+
+    input[type="radio"]::before {
+        content: "❤";
+        position: absolute;
+        top: -4px;
+        left: -1px;
+        font-size: 20px;
+        color: transparent;
+    }
+
+    input[type="radio"]:checked::before {
+        color: #d46a6a;
+    }
+
+    button {
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 18px;
+        background: #e8d4c6;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    #resultado {
+        margin-top: 30px;
+        text-align: center;
+        font-size: 22px;
+        font-weight: bold;
+    }
+
+    #imagen-final {
+        display: none;
+        width: 250px;
+        margin: 20px auto;
+    }
+</style>
+</head>
+<body>
+<div class="marco">
+<h1>Quiz Vintage</h1>
+
+<div class="pregunta">
+    1. ¿Qué es mi cosa favorita de ti?<br>
+    <label><input type="radio" name="p1" value="a"> tus ojos</label>
+    <label><input type="radio" name="p1" value="b"> tus labios</label>
+    <label><input type="radio" name="p1" value="c"> tu cara</label>
+    <label><input type="radio" name="p1" value="d"> tu cuerpo</label>
+    <label><input type="radio" name="p1" value="e"> todas las anteriores</label>
+</div>
+
+<div class="pregunta">
+    2. ¿Cómo fue que te pedí que fueras mi novio?<br>
+    <label><input type="radio" name="p2" value="a"> dibujo de galaxia</label>
+    <label><input type="radio" name="p2" value="b"> una carta</label>
+    <label><input type="radio" name="p2" value="c"> un libro</label>
+    <label><input type="radio" name="p2" value="d"> caminando en la calle</label>
+</div>
+
+<div class="pregunta">
+    3. ¿Cuál fue la primera canción que me dedicaste?<br>
+    <label><input type="radio" name="p3" value="a"> ojos así</label>
+    <label><input type="radio" name="p3" value="b"> lucky ones</label>
+    <label><input type="radio" name="p3" value="c"> día de enero</label>
+    <label><input type="radio" name="p3" value="d"> religion</label>
+</div>
+
+<div class="pregunta">
+    4. ¿Cuál fue la primera película que vimos juntos?<br>
+    <label><input type="radio" name="p4" value="a"> luca</label>
+    <label><input type="radio" name="p4" value="b"> antes del amanecer</label>
+    <label><input type="radio" name="p4" value="c"> maría antonieta</label>
+    <label><input type="radio" name="p4" value="d"> rojo, blanco y sangre azul</label>
+</div>
+
+<button onclick="verificar()">Enviar</button>
+<div id="resultado"></div>
+<img id="imagen-final" src="https://i.imgur.com/mJaxrkx.jpeg" />
+
+</div>
+
+<script>
+function verificar() {
+    let p1 = document.querySelector('input[name="p1"]:checked');
+    let p2 = document.querySelector('input[name="p2"]:checked');
+    let p3 = document.querySelector('input[name="p3"]:checked');
+    let p4 = document.querySelector('input[name="p4"]:checked');
+
+    if (!p1 || !p2 || !p3 || !p4) {
+        alert("Debes responder todas las preguntas");
+        return;
+    }
+
+    let correctas = 0;
+
+    if (p1.value === "e") correctas++;
+    if (p2.value === "a" || p2.value === "d") correctas++;
+    if (p3.value === "c") correctas++;
+    if (p4.value === "d") correctas++;
+
+    if (correctas === 4) {
+        document.getElementById("resultado").textContent = "¡Correcto!";
+        document.getElementById("imagen-final").style.display = "block";
+    } else {
+        document.getElementById("resultado").textContent = "Hay respuestas incorrectas. Intenta de nuevo.";
+        document.getElementById("imagen-final").style.display = "none";
+    }
+}
+</script>
+</body>
+</html>
